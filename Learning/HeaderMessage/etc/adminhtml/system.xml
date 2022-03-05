@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="learning" translate="label" sortOrder="1000">
+            <label>Learning</label>
+        </tab>
+        <section id="headermessage" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Header Message</label>
+            <tab>learning</tab>
+            <resource>Learning_HeaderMessage::headermessage</resource>
+            <group id="message" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Header Message Text</label>
+                <field id="text" translate="label" type="textarea" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Set message</label>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>
