@@ -10,7 +10,7 @@
             <resource>Learning_HeaderMessage::headermessage</resource>
             <group id="message" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
                 <label>Header Message Text</label>
-                <field id="text" translate="label" type="textarea" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <field id="text" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Set message</label>
                 </field>
             </group>
