@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Learning\HeaderMessage\Block;
 
@@ -7,14 +9,16 @@ use Magento\Store\Model\ScopeInterface;
 
 class Message extends Template
 {
+    private const SHOW_MESSAGE = 'headermessage/message/show_message';
+    private const MESSAGE_TEXT = 'headermessage/message/text';
+
     public function isEnable(): bool
     {
-        $status = $this->_scopeConfig->getValue('headermessage/message/show_message', ScopeInterface::SCOPE_STORE);
-        return (boolean) $status;
+        return $this->_scopeConfig->isSetFlag(self::SHOW_MESSAGE, ScopeInterface::SCOPE_STORE);
     }
 
-    public function getMessage()
+    public function getMessage(): string
     {
-        return $this->_scopeConfig->getValue('headermessage/message/text', ScopeInterface::SCOPE_STORE);
+        return $this->_scopeConfig->getValue(self::MESSAGE_TEXT, ScopeInterface::SCOPE_STORE);
     }
 }

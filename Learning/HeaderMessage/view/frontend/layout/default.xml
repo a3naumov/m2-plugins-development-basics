@@ -1,8 +1,13 @@
 <?xml version="1.0"?>
 <layout xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_layout.xsd">
-    <referenceContainer name="page.wrapper">
-        <container name="header.container" as="header_container" label="Page Header Container" htmlTag="div" htmlClass="header_message" before="main.content">
-            <block class="Learning\HeaderMessage\Block\Message" name="test" template="Learning_HeaderMessage::header_message.phtml"/>
-        </container>
-    </referenceContainer>
+    <head>
+        <css src="Learning_HeaderMessage::css/style.css" />
+    </head>
+    <body>
+        <referenceContainer name="page.wrapper">
+            <container name="header.container" as="header_container" label="Page Header Container" htmlTag="div" htmlClass="header_message" before="main.content">
+                <block class="Learning\HeaderMessage\Block\Message" name="test" template="Learning_HeaderMessage::header_message.phtml"/>
+            </container>
+        </referenceContainer>
+    </body>
 </layout>

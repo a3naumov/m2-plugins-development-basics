@@ -1,0 +1,8 @@
+.message_wrapper {
+    background: #000;
+    text-align: center;
+}
+
+.message_wrapper > span {
+    color: #fff;
+}
