@@ -30,10 +30,10 @@ class HighlightItemBorder implements DataPatchInterface, PatchRevertableInterfac
         $this->moduleDataSetup->getConnection()->startSetup();
 
         $eavSetup = $this->eavSetupFactory->create(['setup', $this->moduleDataSetup]);
-        $eavSetup->addAttribute(\Magento\Catalog\Model\Product::ENTITY, 'highlight_border', [
+        $eavSetup->addAttribute(Product::ENTITY, 'highlight_border', [
             'type' => 'int',
             'label' => 'Highlight border',
-            'input' => 'select',
+            'input' => 'boolean',
             'backend' => '',
             'frontend' => '',
             'source' => Boolean::class,
