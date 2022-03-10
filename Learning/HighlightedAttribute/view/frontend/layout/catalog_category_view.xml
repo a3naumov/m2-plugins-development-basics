@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="2columns-left" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <css src="Learning_HighlightedAttribute::css/style.css" />
+    </head>
+    <body>
+        <referenceBlock name="category.products.list" template="Learning_HighlightedAttribute::product/list.phtml">
+            <arguments>
+                <argument name="view_model" xsi:type="object">Learning\HighlightedAttribute\ViewModel\BorderItem</argument>
+            </arguments>
+        </referenceBlock>
+    </body>
+</page>
