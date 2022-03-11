@@ -1,0 +1,17 @@
+{
+  "name": "learning/extension-attribute",
+  "version": "1.0.0",
+  "description": "N/A",
+  "type": "magento2-module",
+  "license": [
+    "Proprietary"
+  ],
+  "autoload": {
+    "files": [
+      "registration.php"
+    ],
+    "psr-4": {
+      "Learning\\ExtensionAttribute\\": ""
+    }
+  }
+}
