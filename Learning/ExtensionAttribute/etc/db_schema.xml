@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="learning_extension_attribute" resource="default" engine="innodb" comment="">
+        <column xsi:type="int" name="id" unsigned="true" nullable="false" identity="true" comment="id"/>
+        <column xsi:type="int" name="product_id" unsigned="true" nullable="false" comment="product_id"/>
+        <column xsi:type="text" name="description" nullable="true" comment="description"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="id"/>
+        </constraint>
+        <constraint xsi:type="foreign" referenceId="LRN_EXT_ATTR_PR_ID_CAT_PRD_ENTT_ENTT_ID" table="learning_extension_attribute" column="product_id" referenceTable="catalog_product_entity" referenceColumn="entity_id" onDelete="CASCADE" />
+    </table>
+</schema>
