@@ -19,10 +19,10 @@ class SaveProductObserver implements ObserverInterface
 
     public function execute(Observer $observer)
     {
-        $product = $observer->getData('product');
+        $product = $observer->getEvent()->getProduct();
         $collection = $this->collectionFactory->create();
         foreach ($product->getExtensionAttributes()->getLearningExtensionAttribute() as $attribute) {
-//            $collection->addItem($attribute);
+            $collection->addItem($attribute);
         }
         $collection->save();
     }

@@ -24,7 +24,7 @@ class LoadProductObserver implements ObserverInterface
 
     public function execute(Observer $observer): void
     {
-        $product = $observer->getData('product');
+        $product = $observer->getEvent()->getProduct();
         $collection = $this->getFilteredCollection($product);
         $this->setAttributeData($collection, $product);
     }
@@ -39,9 +39,7 @@ class LoadProductObserver implements ObserverInterface
     private function setAttributeData(Collection $collection, ProductInterface $entity): void
     {
         $extensionAttributes = $entity->getExtensionAttributes();
-        foreach ($collection->getItems() as $item) {
-            $extensionAttributes->setLearningExtensionAttribute($item->getData());
-        }
+        $extensionAttributes->setLearningExtensionAttribute($collection->getItems());
         $entity->setExtensionAttributes($extensionAttributes);
     }
 }
