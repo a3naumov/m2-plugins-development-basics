@@ -17,7 +17,7 @@ class SaveProductObserver implements ObserverInterface
         $this->collectionFactory = $collectionFactory;
     }
 
-    public function execute(Observer $observer)
+    public function execute(Observer $observer): void
     {
         $product = $observer->getEvent()->getProduct();
         $collection = $this->collectionFactory->create();
