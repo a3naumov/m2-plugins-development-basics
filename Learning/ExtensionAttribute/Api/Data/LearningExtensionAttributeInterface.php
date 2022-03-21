@@ -8,12 +8,12 @@ use Learning\ExtensionAttribute\Model\LearningExtensionAttribute;
 
 interface LearningExtensionAttributeInterface
 {
-    const TEXT = 'text';
-    const PRODUCT_ID = 'id';
+    const DESCRIPTION = 'description';
+    const PRODUCT_ID = 'product_id';
 
-    public function getText(): string;
+    public function getDescription(): string;
 
-    public function setText(string $text): LearningExtensionAttribute;
+    public function setDescription(string $description): LearningExtensionAttribute;
 
     public function getProductId(): int;
 

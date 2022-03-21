@@ -15,9 +15,9 @@ class LearningExtensionAttribute extends AbstractModel implements LearningExtens
         $this->_init(ResourceModel::class);
     }
 
-    public function getText(): string
+    public function getDescription(): string
     {
-        return $this->_getData(self::TEXT);
+        return $this->_getData(self::DESCRIPTION);
     }
 
     public function getProductId(): int
@@ -25,9 +25,9 @@ class LearningExtensionAttribute extends AbstractModel implements LearningExtens
         return $this->_getData(self::PRODUCT_ID);
     }
 
-    public function setText(string $text): LearningExtensionAttribute
+    public function setDescription(string $description): LearningExtensionAttribute
     {
-        return $this->setData(self::TEXT, $text);
+        return $this->setData(self::DESCRIPTION, $description);
     }
 
     public function setProductId(int $productId): LearningExtensionAttribute

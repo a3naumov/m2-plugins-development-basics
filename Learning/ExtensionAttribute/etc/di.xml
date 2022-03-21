@@ -1,0 +1,6 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Learning\ExtensionAttribute\Api\ExtensionAttributeManagementInterface" type="Learning\ExtensionAttribute\Model\ExtensionAttributeManagement"/>
+    <preference for="Learning\ExtensionAttribute\Api\ExtensionAttributeRepositoryInterface" type="Learning\ExtensionAttribute\Model\ExtensionAttributeRepository"/>
+    <preference for="Learning\ExtensionAttribute\Api\Data\LearningExtensionAttributeInterface" type="Learning\ExtensionAttribute\Model\LearningExtensionAttribute"/>
+</config>
