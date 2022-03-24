@@ -1,12 +1,20 @@
 <?xml version="1.0"?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
     <menu>
-        <add id="Learning_ExtensionAttribute::extension_attributes" title="Learning"
-             module="Learning_ExtensionAttribute" sortOrder="1000"
-             resource="Learning_ExtensionAttribute::extension_attributes" />
-        <add id="Learning_ExtensionAttribute::attributes" title="Extension Attributes"
-             module="Learning_ExtensionAttribute" sortOrder="10" action="learning_extension_attributes/attributes"
+        <add id="Learning_ExtensionAttribute::extension_attributes"
+             title="Learning"
+             module="Learning_ExtensionAttribute"
+             sortOrder="1000"
+             resource="Learning_ExtensionAttribute::extension_attributes"
+        />
+        <add id="Learning_ExtensionAttribute::attributes"
+             title="Extension Attributes"
+             module="Learning_ExtensionAttribute"
+             sortOrder="10"
+             action="learning_extension_attributes/attributes"
              resource="Learning_ExtensionAttribute::attributes"
-             parent="Learning_ExtensionAttribute::extension_attributes" />
+             parent="Learning_ExtensionAttribute::extension_attributes"
+        />
     </menu>
 </config>
+

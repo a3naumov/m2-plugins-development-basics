@@ -9,7 +9,6 @@ use Magento\Backend\App\Action\Context;
 use Magento\Framework\View\Result\Page;
 use Magento\Framework\View\Result\PageFactory;
 
-
 class Index extends Action
 {
     protected PageFactory $resultPageFactory;
@@ -25,6 +24,7 @@ class Index extends Action
     public function execute(): Page
     {
         $resultPage = $this->resultPageFactory->create();
+        $resultPage->setActiveMenu('Learning_ExtensionAttribute::extension_attributes');
         $resultPage->getConfig()->getTitle()->prepend('Extension Attributes');
 
         return $resultPage;
