@@ -3,4 +3,17 @@
     <preference for="Learning\ExtensionAttribute\Api\ExtensionAttributeManagementInterface" type="Learning\ExtensionAttribute\Model\ExtensionAttributeManagement"/>
     <preference for="Learning\ExtensionAttribute\Api\ExtensionAttributeRepositoryInterface" type="Learning\ExtensionAttribute\Model\ExtensionAttributeRepository"/>
     <preference for="Learning\ExtensionAttribute\Api\Data\LearningExtensionAttributeInterface" type="Learning\ExtensionAttribute\Model\LearningExtensionAttribute"/>
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="learning_extension_attributes_listing_data_source" xsi:type="string">Learning\ExtensionAttribute\Model\ResourceModel\LearningExtensionAttribute\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+    <virtualType name="Learning\ExtensionAttribute\Model\ResourceModel\LearningExtensionAttribute\Grid\Collection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">learning_extension_attribute</argument>
+            <argument name="resourceModel" xsi:type="string">Learning\ExtensionAttribute\Model\ResourceModel\LearningExtensionAttribute</argument>
+        </arguments>
+    </virtualType>
 </config>
