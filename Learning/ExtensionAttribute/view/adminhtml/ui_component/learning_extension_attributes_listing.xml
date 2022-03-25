@@ -24,7 +24,39 @@
             </argument>
         </argument>
     </dataSource>
+    <listingToolbar name="learning_extension_attributes_listing_top">
+        <massaction name="listing_massaction">
+            <argument name="data" xsi:type="array">
+                <item name="data" xsi:type="array">
+                    <item name="selectProvider" xsi:type="string">learning_extension_attributes_listing.learning_extension_attributes_listing.learning_extension_attributes_columns.ids</item>
+                    <item name="displayArea" xsi:type="string">bottom</item>
+                    <item name="component" xsi:type="string">Magento_Ui/js/grid/tree-massactions</item>
+                    <item name="indexField" xsi:type="string">id</item>
+                </item>
+            </argument>
+            <action name="delete">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="type" xsi:type="string">delete</item>
+                        <item name="label" xsi:type="string" translate="true">Delete</item>
+                        <item name="url" xsi:type="url" path="learning_extension_attributes/attributes/massDelete"/>
+                        <item name="confirm" xsi:type="array">
+                            <item name="title" xsi:type="string" translate="true">Delete attributes</item>
+                            <item name="message" xsi:type="string" translate="true">Are you sure you want to delete selected attributes?</item>
+                        </item>
+                    </item>
+                </argument>
+            </action>
+        </massaction>
+    </listingToolbar>
     <columns name="learning_extension_attributes_columns">
+        <selectionsColumn name="ids">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="indexField" xsi:type="string">id</item>
+                </item>
+            </argument>
+        </selectionsColumn>
         <column name="id">
             <settings>
                 <label translate="true">ID</label>
