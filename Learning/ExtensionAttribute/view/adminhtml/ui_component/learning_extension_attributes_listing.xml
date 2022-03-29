@@ -11,7 +11,7 @@
                 <item name="name" xsi:type="string">add</item>
                 <item name="label" xsi:type="string" translate="true">Add New Attribute</item>
                 <item name="class" xsi:type="string">primary</item>
-                <item name="url" xsi:type="string">learning_extension_attributes/attributes/createform</item>
+                <item name="url" xsi:type="string">learning_extension_attributes/attributes/showform</item>
             </item>
         </item>
     </argument>

@@ -5,16 +5,15 @@
             <item name="provider" xsi:type="string">learning_extension_attributes_form.learning_extension_attributes_form_data_source</item>
             <item name="deps" xsi:type="string">learning_extension_attributes_form.learning_extension_attributes_form_data_source</item>
         </item>
-        <item name="buttons" xsi:type="array">
-            <item name="back" xsi:type="array">
-                <item name="name" xsi:type="string">back</item>
-                <item name="label" xsi:type="string" translate="true">Back</item>
-                <item name="class" xsi:type="string">back</item>
-                <item name="url" xsi:type="string">learning_extension_attributes/attributes</item>
-            </item>
+        <item name="label" xsi:type="string" translate="true">Add New Extension Attribute</item>
+        <item name="config" xsi:type="array">
+            <item name="dataScope" xsi:type="string">data</item>
+            <item name="namespace" xsi:type="string">learning_extension_attributes_form</item>
         </item>
-        <item name="layout" xsi:type="array">
-            <item name="type" xsi:type="string">tabs</item>
+        <item name="template" xsi:type="string">templates/form/collapsible</item>
+        <item name="buttons" xsi:type="array">
+            <item name="save" xsi:type="string">Learning\ExtensionAttribute\Block\Adminhtml\Edit\Button\Create</item>
+            <item name="back" xsi:type="string">Learning\ExtensionAttribute\Block\Adminhtml\Edit\Button\Back</item>
         </item>
     </argument>
     <dataSource name="learning_extension_attributes_form_data_source">
@@ -23,6 +22,11 @@
             <argument name="name" xsi:type="string">learning_extension_attributes_form_data_source</argument>
             <argument name="primaryFieldName" xsi:type="string">id</argument>
             <argument name="requestFieldName" xsi:type="string">id</argument>
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="submit_url" xsi:type="url" path="learning_extension_attributes/attributes/create"/>
+                </item>
+            </argument>
         </argument>
         <argument name="data" xsi:type="array">
             <item name="js_config" xsi:type="array">
@@ -30,7 +34,7 @@
             </item>
         </argument>
     </dataSource>
-    <fieldset name="learning_extension_attributes_fields">
+    <fieldset name="general_information">
         <argument name="data" xsi:type="array">
             <item name="config" xsi:type="array">
                 <item name="collapsible" xsi:type="boolean">false</item>
@@ -38,6 +42,13 @@
                 <item name="sortOrder" xsi:type="number">20</item>
             </item>
         </argument>
+        <field name="product_id" sortOrder="10" formElement="input">
+            <settings>
+                <dataType>text</dataType>
+                <visible>true</visible>
+                <label translate="true">Product ID</label>
+            </settings>
+        </field>
         <field name="product_id">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">

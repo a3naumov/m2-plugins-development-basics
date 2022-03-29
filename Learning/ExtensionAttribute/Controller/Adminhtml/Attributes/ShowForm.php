@@ -10,7 +10,7 @@ use Magento\Framework\App\ResponseInterface;
 use Magento\Framework\View\Result\Page;
 use Magento\Framework\View\Result\PageFactory;
 
-class CreateForm extends Action
+class ShowForm extends Action
 {
     protected PageFactory $resultPageFactory;
 
