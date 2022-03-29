@@ -49,27 +49,26 @@
                 <label translate="true">Product ID</label>
             </settings>
         </field>
-        <field name="product_id">
-            <argument name="data" xsi:type="array">
-                <item name="config" xsi:type="array">
-                    <item name="dataType" xsi:type="string">text</item>
-                    <item name="label" xsi:type="string" translate="true">Product Id</item>
-                    <item name="formElement" xsi:type="string">input</item>
-                    <item name="source" xsi:type="string">extension_attribute</item>
-                    <item name="dataScope" xsi:type="string">product_id</item>
-                </item>
-            </argument>
+        <field name="product_id" formElement="input">
+            <settings>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                    <rule name="validate-digits" xsi:type="boolean">true</rule>
+                </validation>
+                <dataType>text</dataType>
+                <label translate="true">Product ID</label>
+                <dataScope>product_id</dataScope>
+            </settings>
         </field>
-        <field name="description">
-            <argument name="data" xsi:type="array">
-                <item name="config" xsi:type="array">
-                    <item name="dataType" xsi:type="string">text</item>
-                    <item name="label" xsi:type="string" translate="true">Description</item>
-                    <item name="formElement" xsi:type="string">textarea</item>
-                    <item name="source" xsi:type="string">extension_attribute</item>
-                    <item name="dataScope" xsi:type="string">description</item>
-                </item>
-            </argument>
+        <field name="description" formElement="textarea">
+            <settings>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+                <dataType>text</dataType>
+                <label translate="true">Description</label>
+                <dataScope>description</dataScope>
+            </settings>
         </field>
     </fieldset>
 </form>
