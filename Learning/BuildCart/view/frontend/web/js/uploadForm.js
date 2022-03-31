@@ -1,8 +1,8 @@
 define([
-    "jquery"
-], function ($) {
+], function () {
     "use strict";
     return function (config, element) {
-        console.log(12+12);
+        console.log(element);
+        console.log(5+ 5);
     }
 });

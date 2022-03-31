@@ -38,14 +38,20 @@ class Upload extends Action
         foreach ($_FILES as $file) {
             $handle = fopen($file['tmp_name'], 'r');
             while ($data = fgetcsv($handle, 100, ",")) {
-                $this->putProductInCart($data);
+                try {
+                    $this->putProductInCart($data);
+                } catch (\Exception $e) {
+                    $this->messageManager->addErrorMessage($e->getMessage());
+                }
             }
             fclose($handle);
-            $this->cart->save();
+        }
+        $saveData = $this->cart->save();
+
+        if ($saveData) {
+            $this->messageManager->addSuccessMessage('Success!');
         }
 
-
-        //return $this->resultFactory->create(ResultFactory::TYPE_REDIRECT)->setPath('learning_buildcart/index');
         return $this->resultFactory->create(ResultFactory::TYPE_REDIRECT)->setPath('checkout/cart');
     }
 
