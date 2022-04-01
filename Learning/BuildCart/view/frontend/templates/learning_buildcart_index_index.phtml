@@ -1,4 +1,8 @@
-<div class="drop-area" data-mage-init='{"uploadForm": {}}'>
-    <form action="<?= $block->getUrlForForm(); ?>" method="post" enctype="multipart/form-data">
+<div id="drop-area" class="drop-area" data-mage-init='{"uploadForm": {}}'>
+    <div class="text">
+        <p id="drop-area-text">Upload csv file with the file dialog or by dragging and dropping onto the dashed region</p>
+    </div>
+    <form enctype="multipart/form-data" action="<?= $block->getUrlForForm(); ?>" method="POST" id="form">
+        <input name="file" type="file" id="file" accept=".csv" />
     </form>
 </div>

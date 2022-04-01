@@ -1,6 +1,64 @@
 .drop-area {
-    border: 2px dashed #ccc;
-    border-radius: 20px;
-    margin: 0 auto;
-    padding: 20px;
+    width: 100%;
+    border: 3px dashed #ccc;
+    border-radius: 40px;
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    transition: all linear .1s;
+}
+
+.active-area {
+    background-color: #f5f5f5;
+    border: 3px dashed #1d8c2f;
+}
+.with-file {
+    border: 3px solid #1d8c2f;
+}
+
+.text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.text p {
+    position: relative;
+    user-select: none;
+}
+
+.drop-area form {
+    position: absolute;
+    z-index: 0;
+    width: 100%;
+    height: inherit;
+}
+#file {
+    opacity: 0;
+    cursor: pointer;
+    width: 100%;
+    height: inherit;
+}
+.submit_form_btn {
+    position: relative;
+    left: 50%;
+    top: -50px;
+    transform: translate(-50%, 0);
+    padding: 2px 15px;
+    border: 1px solid #515151;
+    border-radius: 5px;
+    background-color: #bdbdbd;
+}
+
+.submit_form_btn:hover {
+    color: #fff;
+    transition: all linear .1s;
+    background-color: #515151;
+}
+.danger-error {
+    color: red;
+    text-align: center;
 }

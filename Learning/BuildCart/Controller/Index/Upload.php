@@ -36,15 +36,11 @@ class Upload extends Action
         }
 
         foreach ($_FILES as $file) {
-            $handle = fopen($file['tmp_name'], 'r');
-            while ($data = fgetcsv($handle, 100, ",")) {
-                try {
-                    $this->putProductInCart($data);
-                } catch (\Exception $e) {
-                    $this->messageManager->addErrorMessage($e->getMessage());
-                }
+            if ($file['type'] !== "text/csv") {
+                $this->messageManager->addErrorMessage('Please upload csv file!');
+                return $this->resultFactory->create(ResultFactory::TYPE_REDIRECT)->setUrl($this->_redirect->getRefererUrl());
             }
-            fclose($handle);
+            $this->readFile($file);
         }
         $saveData = $this->cart->save();
 
@@ -59,5 +55,18 @@ class Upload extends Action
     {
         $product = $this->productRepository->get($data[0]);
         $this->cart->addProduct($product, ['qty' => (int) $data[1]]);
+    }
+
+    public function readFile(array $file): void
+    {
+        $handle = fopen($file['tmp_name'], 'r');
+        while ($data = fgetcsv($handle, 100, ",")) {
+            try {
+                $this->putProductInCart($data);
+            } catch (\Exception $e) {
+                $this->messageManager->addErrorMessage($e->getMessage());
+            }
+        }
+        fclose($handle);
     }
 }
