@@ -4,29 +4,23 @@ declare(strict_types=1);
 
 namespace Learning\BuildCart\Controller\Index;
 
-use Magento\Checkout\Model\Cart;
+use Learning\BuildCart\Model\Cart;
 use Magento\Framework\App\Action\Action;
 use Magento\Framework\App\Action\Context;
-use Magento\Catalog\Model\ProductRepository;
 use Magento\Framework\Controller\ResultFactory;
 use Magento\Framework\Controller\Result\Redirect;
 use Magento\Framework\Exception\NotFoundException;
 
 class Upload extends Action
 {
-    protected Cart $cart;
-
-    protected ProductRepository $productRepository;
+    private Cart $cart;
 
     public function __construct(
         Context $context,
-        Cart $cart,
-        ProductRepository $productRepository
+        Cart $cart
     ) {
         $this->cart = $cart;
-        $this->productRepository = $productRepository;
         return parent::__construct($context);
-
     }
 
     public function execute(): Redirect
@@ -36,37 +30,11 @@ class Upload extends Action
         }
 
         foreach ($_FILES as $file) {
-            if ($file['type'] !== "text/csv") {
-                $this->messageManager->addErrorMessage('Please upload csv file!');
-                return $this->resultFactory->create(ResultFactory::TYPE_REDIRECT)->setUrl($this->_redirect->getRefererUrl());
-            }
-            $this->readFile($file);
-        }
-        $saveData = $this->cart->save();
-
-        if ($saveData) {
-            $this->messageManager->addSuccessMessage('Success!');
+            $data = $this->cart->readDataFromFile($file);
+            $this->cart->putProduct($data);
         }
 
+        $this->messageManager->addSuccessMessage('Success!');
         return $this->resultFactory->create(ResultFactory::TYPE_REDIRECT)->setPath('checkout/cart');
-    }
-
-    public function putProductInCart(array $data): void
-    {
-        $product = $this->productRepository->get($data[0]);
-        $this->cart->addProduct($product, ['qty' => (int) $data[1]]);
-    }
-
-    public function readFile(array $file): void
-    {
-        $handle = fopen($file['tmp_name'], 'r');
-        while ($data = fgetcsv($handle, 100, ",")) {
-            try {
-                $this->putProductInCart($data);
-            } catch (\Exception $e) {
-                $this->messageManager->addErrorMessage($e->getMessage());
-            }
-        }
-        fclose($handle);
     }
 }
