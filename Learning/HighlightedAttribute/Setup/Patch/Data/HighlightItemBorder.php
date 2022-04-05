@@ -14,9 +14,20 @@ use Magento\Eav\Model\Entity\Attribute\ScopedAttributeInterface;
 
 class HighlightItemBorder implements DataPatchInterface, PatchRevertableInterface
 {
+    /**
+     * @var ModuleDataSetupInterface
+     */
     private ModuleDataSetupInterface $moduleDataSetup;
+
+    /**
+     * @var EavSetupFactory
+     */
     private EavSetupFactory $eavSetupFactory;
 
+    /**
+     * @param ModuleDataSetupInterface $moduleDataSetup
+     * @param EavSetupFactory $eavSetupFactory
+     */
     public function __construct(
         ModuleDataSetupInterface $moduleDataSetup,
         EavSetupFactory $eavSetupFactory
@@ -25,6 +36,11 @@ class HighlightItemBorder implements DataPatchInterface, PatchRevertableInterfac
         $this->eavSetupFactory = $eavSetupFactory;
     }
 
+    /**
+     * @return void
+     * @throws \Magento\Framework\Exception\LocalizedException
+     * @throws \Zend_Validate_Exception
+     */
     public function apply(): void
     {
         $this->moduleDataSetup->getConnection()->startSetup();
@@ -52,6 +68,9 @@ class HighlightItemBorder implements DataPatchInterface, PatchRevertableInterfac
         $this->moduleDataSetup->getConnection()->endSetup();
     }
 
+    /**
+     * @return void
+     */
     public function revert(): void
     {
         $this->moduleDataSetup->getConnection()->startSetup();
@@ -62,11 +81,17 @@ class HighlightItemBorder implements DataPatchInterface, PatchRevertableInterfac
         $this->moduleDataSetup->getConnection()->endSetup();
     }
 
+    /**
+     * @return array|string[]
+     */
     public static function getDependencies(): array
     {
         return [];
     }
 
+    /**
+     * @return array|string[]
+     */
     public function getAliases(): array
     {
         return [];

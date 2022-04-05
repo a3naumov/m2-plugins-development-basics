@@ -12,16 +12,29 @@ use Learning\ExtensionAttribute\Model\ResourceModel\LearningExtensionAttribute\C
 
 class LoadProductObserver implements ObserverInterface
 {
+    /**
+     * Field in DB for filter collection
+     */
     private const ATTRIBUTE = 'product_id';
 
+    /**
+     * @var CollectionFactory
+     */
     private CollectionFactory $collectionFactory;
 
+    /**
+     * @param CollectionFactory $collectionFactory
+     */
     public function __construct(
         CollectionFactory $collectionFactory
     ) {
         $this->collectionFactory = $collectionFactory;
     }
 
+    /**
+     * @param Observer $observer
+     * @return void
+     */
     public function execute(Observer $observer): void
     {
         $product = $observer->getEvent()->getProduct();
@@ -29,6 +42,10 @@ class LoadProductObserver implements ObserverInterface
         $this->setAttributeData($collection, $product);
     }
 
+    /**
+     * @param ProductInterface $entity
+     * @return Collection
+     */
     private function getFilteredCollection(ProductInterface $entity): Collection
     {
         $collection = $this->collectionFactory->create();
@@ -36,6 +53,11 @@ class LoadProductObserver implements ObserverInterface
         return $collection;
     }
 
+    /**
+     * @param Collection $collection
+     * @param ProductInterface $entity
+     * @return void
+     */
     private function setAttributeData(Collection $collection, ProductInterface $entity): void
     {
         $extensionAttributes = $entity->getExtensionAttributes();

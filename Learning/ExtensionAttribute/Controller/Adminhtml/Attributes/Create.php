@@ -15,10 +15,21 @@ use Learning\ExtensionAttribute\Model\ResourceModel\LearningExtensionAttribute\C
 
 class Create extends Action implements HttpPostActionInterface
 {
+    /**
+     * @var CollectionFactory
+     */
     protected CollectionFactory $collectionFactory;
 
+    /**
+     * @var LearningExtensionAttributeInterfaceFactory
+     */
     protected LearningExtensionAttributeInterfaceFactory $factory;
 
+    /**
+     * @param Context $context
+     * @param CollectionFactory $collectionFactory
+     * @param LearningExtensionAttributeInterfaceFactory $factory
+     */
     public function __construct(
         Context $context,
         CollectionFactory $collectionFactory,
@@ -29,6 +40,10 @@ class Create extends Action implements HttpPostActionInterface
         $this->factory = $factory;
     }
 
+    /**
+     * @return Redirect
+     * @throws NotFoundException
+     */
     public function execute(): Redirect
     {
         if (!$this->getRequest()->isPost()) {

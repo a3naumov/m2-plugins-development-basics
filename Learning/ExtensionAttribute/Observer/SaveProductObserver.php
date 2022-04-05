@@ -10,13 +10,24 @@ use Learning\ExtensionAttribute\Model\ResourceModel\LearningExtensionAttribute\C
 
 class SaveProductObserver implements ObserverInterface
 {
+    /**
+     * @var CollectionFactory
+     */
     private CollectionFactory $collectionFactory;
 
+    /**
+     * @param CollectionFactory $collectionFactory
+     */
     public function __construct(CollectionFactory $collectionFactory)
     {
         $this->collectionFactory = $collectionFactory;
     }
 
+    /**
+     * @param Observer $observer
+     * @return void
+     * @throws \Exception
+     */
     public function execute(Observer $observer): void
     {
         $product = $observer->getEvent()->getProduct();

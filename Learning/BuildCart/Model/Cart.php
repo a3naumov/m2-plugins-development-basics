@@ -16,19 +16,19 @@ class Cart
     private CartModel $cart;
 
     /**
-     * @var \Magento\Catalog\Model\ProductRepository
+     * @var ProductRepository
      */
     private ProductRepository $productRepository;
 
     /**
-     * @var \Magento\Framework\File\Csv
+     * @var Csv
      */
     private Csv $csvReader;
 
     /**
      * @param \Magento\Checkout\Model\Cart $cart
-     * @param \Magento\Catalog\Model\ProductRepository $productRepository
-     * @param \Magento\Framework\File\Csv $csvReader
+     * @param ProductRepository $productRepository
+     * @param Csv $csvReader
      */
     public function __construct(
         CartModel $cart,

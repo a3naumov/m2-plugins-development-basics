@@ -8,6 +8,9 @@ use Magento\Framework\Model\ResourceModel\Db\AbstractDb;
 
 class LearningExtensionAttribute extends AbstractDb
 {
+    /**
+     * @return void
+     */
     protected function _construct()
     {
         $this->_init('learning_extension_attribute', 'id');

@@ -8,6 +8,9 @@ use Magento\Framework\View\Element\UiComponent\Control\ButtonProviderInterface;
 
 class Create implements ButtonProviderInterface
 {
+    /**
+     * @return array
+     */
     public function getButtonData(): array
     {
         return [

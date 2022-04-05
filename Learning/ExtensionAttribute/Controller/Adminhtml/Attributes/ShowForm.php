@@ -12,8 +12,15 @@ use Magento\Framework\View\Result\PageFactory;
 
 class ShowForm extends Action
 {
+    /**
+     * @var PageFactory
+     */
     protected PageFactory $resultPageFactory;
 
+    /**
+     * @param Context $context
+     * @param PageFactory $resultPageFactory
+     */
     public function __construct(
         Context $context,
         PageFactory $resultPageFactory
@@ -22,6 +29,9 @@ class ShowForm extends Action
         $this->resultPageFactory = $resultPageFactory;
     }
 
+    /**
+     * @return Page
+     */
     public function execute(): Page
     {
         $resultPage = $this->resultPageFactory->create();

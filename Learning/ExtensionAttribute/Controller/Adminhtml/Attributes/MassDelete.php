@@ -16,12 +16,27 @@ use Learning\ExtensionAttribute\Model\ResourceModel\LearningExtensionAttribute\C
 
 class MassDelete extends Action implements HttpPostActionInterface
 {
+    /**
+     * @var Filter
+     */
     protected Filter $filter;
 
+    /**
+     * @var CollectionFactory
+     */
     protected CollectionFactory $collectionFactory;
 
+    /**
+     * @var ExtensionAttributeRepositoryInterface
+     */
     protected ExtensionAttributeRepositoryInterface $repository;
 
+    /**
+     * @param Context $context
+     * @param Filter $filter
+     * @param CollectionFactory $collectionFactory
+     * @param ExtensionAttributeRepositoryInterface $repository
+     */
     public function __construct(
         Context $context,
         Filter $filter,
@@ -34,6 +49,11 @@ class MassDelete extends Action implements HttpPostActionInterface
         parent::__construct($context);
     }
 
+    /**
+     * @return Redirect
+     * @throws NotFoundException
+     * @throws \Magento\Framework\Exception\LocalizedException
+     */
     public function execute(): Redirect
     {
         if (!$this->getRequest()->isPost()) {

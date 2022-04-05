@@ -10,9 +10,20 @@ use Learning\ExtensionAttribute\Model\ResourceModel\LearningExtensionAttribute a
 
 class ExtensionAttributeRepository implements ExtensionAttributeRepositoryInterface
 {
+    /**
+     * @var AttributeResourceModel
+     */
     private AttributeResourceModel $attributeResourceModel;
+
+    /**
+     * @var LearningExtensionAttributeFactory
+     */
     private LearningExtensionAttributeFactory $learningExtensionAttributeFactory;
 
+    /**
+     * @param AttributeResourceModel $attributeResourceModel
+     * @param LearningExtensionAttributeFactory $learningExtensionAttributeFactory
+     */
     public function __construct(
         AttributeResourceModel $attributeResourceModel,
         LearningExtensionAttributeFactory $learningExtensionAttributeFactory
@@ -21,6 +32,10 @@ class ExtensionAttributeRepository implements ExtensionAttributeRepositoryInterf
         $this->learningExtensionAttributeFactory = $learningExtensionAttributeFactory;
     }
 
+    /**
+     * @param int $id
+     * @return LearningExtensionAttribute
+     */
     public function getById(int $id): LearningExtensionAttribute
     {
         $attribute = $this->learningExtensionAttributeFactory->create();
@@ -28,6 +43,10 @@ class ExtensionAttributeRepository implements ExtensionAttributeRepositoryInterf
         return $attribute;
     }
 
+    /**
+     * @param int $product_id
+     * @return LearningExtensionAttribute
+     */
     public function getByProductId(int $product_id): LearningExtensionAttribute
     {
         $attribute = $this->learningExtensionAttributeFactory->create();
@@ -35,18 +54,33 @@ class ExtensionAttributeRepository implements ExtensionAttributeRepositoryInterf
         return $attribute;
     }
 
+    /**
+     * @param LearningExtensionAttributeInterface $learningExtensionAttribute
+     * @return bool
+     * @throws \Exception
+     */
     public function delete(LearningExtensionAttributeInterface $learningExtensionAttribute): bool
     {
         $this->attributeResourceModel->delete($learningExtensionAttribute);
         return true;
     }
 
+    /**
+     * @param int $id
+     * @return bool
+     * @throws \Exception
+     */
     public function deleteById(int $id): bool
     {
         $this->delete($this->getById($id));
         return true;
     }
 
+    /**
+     * @param int $product_id
+     * @return bool
+     * @throws \Exception
+     */
     public function deleteByProductId(int $product_id): bool
     {
         $this->delete($this->getByProductId($product_id));

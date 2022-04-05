@@ -11,8 +11,15 @@ use Magento\Framework\View\Result\PageFactory;
 
 class Index extends Action
 {
+    /**
+     * @var PageFactory
+     */
     protected PageFactory $_pageFactory;
 
+    /**
+     * @param Context $context
+     * @param PageFactory $pageFactory
+     */
     public function __construct(
         Context $context,
         PageFactory $pageFactory
@@ -21,6 +28,9 @@ class Index extends Action
         return parent::__construct($context);
     }
 
+    /**
+     * @return Page
+     */
     public function execute(): Page
     {
         $resultPage = $this->_pageFactory->create();

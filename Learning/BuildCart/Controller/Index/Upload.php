@@ -16,13 +16,13 @@ use Magento\Framework\Exception\NotFoundException;
 class Upload extends Action
 {
     /**
-     * @var \Learning\BuildCart\Model\Cart
+     * @var Cart
      */
     private Cart $cart;
 
     /**
-     * @param \Magento\Framework\App\Action\Context $context
-     * @param \Learning\BuildCart\Model\Cart $cart
+     * @param Context $context
+     * @param Cart $cart
      */
     public function __construct(
         Context $context,
@@ -33,8 +33,8 @@ class Upload extends Action
     }
 
     /**
-     * @return \Magento\Framework\Controller\Result\Redirect
-     * @throws \Magento\Framework\Exception\NotFoundException
+     * @return Redirect
+     * @throws NotFoundException
      */
     public function execute(): Redirect
     {

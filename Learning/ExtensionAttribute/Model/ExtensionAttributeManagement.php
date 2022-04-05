@@ -11,11 +11,32 @@ use Learning\ExtensionAttribute\Model\ResourceModel\LearningExtensionAttribute\C
 
 class ExtensionAttributeManagement implements ExtensionAttributeManagementInterface
 {
+    /**
+     * @var Request
+     */
     private Request $request;
+
+    /**
+     * @var LearningExtensionAttributeInterfaceFactory
+     */
     private LearningExtensionAttributeInterfaceFactory $factory;
+
+    /**
+     * @var CollectionFactory
+     */
     private CollectionFactory $collection;
+
+    /**
+     * @var ExtensionAttributeRepository
+     */
     private ExtensionAttributeRepository $repository;
 
+    /**
+     * @param Request $request
+     * @param LearningExtensionAttributeInterfaceFactory $factory
+     * @param CollectionFactory $collection
+     * @param ExtensionAttributeRepository $repository
+     */
     public function __construct(
         Request $request,
         LearningExtensionAttributeInterfaceFactory $factory,
@@ -28,6 +49,10 @@ class ExtensionAttributeManagement implements ExtensionAttributeManagementInterf
         $this->repository = $repository;
     }
 
+    /**
+     * @return string
+     * @throws \Exception
+     */
     public function createAttributes(): string
     {
         $count = 0;
@@ -49,6 +74,9 @@ class ExtensionAttributeManagement implements ExtensionAttributeManagementInterf
         return 'Success!';
     }
 
+    /**
+     * @return string
+     */
     public function deleteAttributes(): string
     {
         $params = $this->request->getBodyParams();

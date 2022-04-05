@@ -8,6 +8,9 @@ use Magento\Catalog\Block\Product\View as Template;
 
 class View extends Template
 {
+    /**
+     * @return array
+     */
     public function getDescriptions(): array
     {
         $descriptions = [];
