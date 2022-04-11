@@ -1,0 +1,14 @@
+<li id="customer_message_step" data-bind="fadeVisible: isVisible">
+    <div class="step-title" data-bind="i18n: 'Message to order'" data-role="title"></div>
+    <div id="checkout-step-customer-message" class="step-content" data-role="content">
+        <form data-bind="submit: navigateToNextStep" novalidate="novalidate" class="form">
+            <div class="actions-toolbar">
+                <div class="primary">
+                    <button data-role="opc-continue" type="submit" class="button action continue primary">
+                        <span data-bind="i18n: 'Next'"></span>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</li>
