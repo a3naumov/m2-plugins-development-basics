@@ -1,0 +1,14 @@
+{
+  "name": "learning/module-checkout-message",
+  "version": "1.0.0",
+  "description": "N/A",
+  "type": "magento2-module",
+  "autoload": {
+    "files": [
+      "registration.php"
+    ],
+    "psr-4": {
+      "Learning\\CheckoutMessage\\": ""
+    }
+  }
+}
