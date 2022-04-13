@@ -2,22 +2,21 @@
 
 declare(strict_types=1);
 
-namespace Learning\CheckoutMessage\Plugin\Checkout;
+namespace Learning\CheckoutMessage\Plugin\Magento\Checkout;
 
 use Magento\Checkout\Model\Session;
 use Magento\Framework\Data\Form\FormKey;
 use Magento\Customer\Model\AddressFactory;
 use Magento\Framework\View\Element\Template\Context;
-use Magento\Checkout\Block\Checkout\LayoutProcessor;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\CheckoutAgreements\Model\ResourceModel\Agreement\CollectionFactory;
 
-class LayoutProcessorPlugin
+class LayoutProcessor
 {
     /**
      * @var ScopeConfigInterface
      */
-    protected ScopeConfigInterface $scopeConfig;
+    protected \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig;
 
     /**
      * @var Session
@@ -34,6 +33,12 @@ class LayoutProcessorPlugin
      */
     protected FormKey $formKey;
 
+    /**
+     * @param Context $context
+     * @param CollectionFactory $agreementCollectionFactory
+     * @param Session $checkoutSession
+     * @param AddressFactory $customerAddressFactory
+     */
     public function __construct(
         Context $context,
         CollectionFactory $agreementCollectionFactory,
@@ -44,28 +49,32 @@ class LayoutProcessorPlugin
         $this->checkoutSession = $checkoutSession;
         $this->customerAddressFactory = $customerAddressFactory;
     }
+
     /**
-     * @param LayoutProcessor $subject
+     * @param \Magento\Checkout\Block\Checkout\LayoutProcessor $subject
      * @param array $jsLayout
      * @return array
      */
-    public function afterProcess(LayoutProcessor $subject, array  $jsLayout): array
+    public function afterProcess(
+        \Magento\Checkout\Block\Checkout\LayoutProcessor $subject,
+        array  $jsLayout
+    ): array
     {
         $jsLayout['components']['checkout']['children']['steps']['children']['billing-step']['children']
-        ['payment']['children']['payments-list']['children']['before-place-order']['children']['customer_comment'] = [
+        ['payment']['children']['payments-list']['children']['before-place-order']['children']['comment'] = [
             'component' => 'Magento_Ui/js/form/element/textarea',
             'config' => [
                 'customScope' => 'shippingAddress',
                 'template' => 'ui/form/field',
                 'options' => [],
-                'id' => 'customer_comment'
+                'id' => 'comment'
             ],
-            'dataScope' => 'ordercomment.customer_comment',
+            'dataScope' => 'ordercomment.comment',
             'label' => 'Order Comment',
             'provider' => 'checkoutProvider',
             'visible' => true,
             'sortOrder' => 250,
-            'id' => 'customer_comment'
+            'id' => 'comment'
         ];
 
         return $jsLayout;
