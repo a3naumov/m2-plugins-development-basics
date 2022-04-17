@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace Learning\CheckoutMessage\Plugin\Magento\Checkout;
 
-use Magento\Quote\Api\Data\PaymentInterface;
-use Magento\Quote\Api\Data\AddressInterface;
-use Magento\Sales\Model\ResourceModel\Order;
-use Magento\Sales\Api\OrderRepositoryInterface;
 use Magento\Checkout\Model\PaymentInformationManagement;
+use Magento\Sales\Api\OrderRepositoryInterface;
+use Magento\Sales\Model\ResourceModel\Order;
+use Magento\Quote\Api\Data\AddressInterface;
+use Magento\Quote\Api\Data\PaymentInterface;
+use Magento\Quote\Api\Data\PaymentExtensionInterface;
 
 class PaymentInformationManagementPlugin
 {
@@ -53,19 +54,24 @@ class PaymentInformationManagementPlugin
     {
         if($result){
             $order = $this->orderRepository->get($result);
-            $orderComment = $paymentMethod->getExtensionAttributes();
+            $orderComment = $this->getComment($paymentMethod->getExtensionAttributes());
 
-            if ($orderComment->getComment()) {
-                $comment = trim($orderComment->getComment());
-            } else {
-                $comment = '';
-            }
-
-            $order->addCommentToStatusHistory($comment);
-            $order->setCustomerNote($comment);
+            $order->addCommentToStatusHistory($orderComment);
+            $order->setCustomerNote($orderComment);
             $this->orderResource->save($order);
         }
 
         return $result;
+    }
+
+    /**
+     * @param PaymentExtensionInterface $extensionAttributes
+     * @return string
+     */
+    public function getComment(PaymentExtensionInterface $extensionAttributes): string
+    {
+        return ($extensionAttributes->getComment())
+            ? trim($extensionAttributes->getComment())
+            : '';
     }
 }
