@@ -54,7 +54,7 @@ class PaymentInformationManagementPlugin
     {
         if($result){
             $order = $this->orderRepository->get($result);
-            $orderComment = $this->getComment($paymentMethod->getExtensionAttributes());
+            $orderComment = $this->getComment(null);
 
             $order->addCommentToStatusHistory($orderComment);
             $order->setCustomerNote($orderComment);
@@ -65,12 +65,12 @@ class PaymentInformationManagementPlugin
     }
 
     /**
-     * @param PaymentExtensionInterface $extensionAttributes
+     * @param PaymentExtensionInterface|null $extensionAttributes
      * @return string
      */
-    public function getComment(PaymentExtensionInterface $extensionAttributes): string
+    public function getComment(?PaymentExtensionInterface $extensionAttributes): string
     {
-        return ($extensionAttributes->getComment())
+        return ($extensionAttributes && $extensionAttributes->getComment())
             ? trim($extensionAttributes->getComment())
             : '';
     }

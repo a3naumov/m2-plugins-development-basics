@@ -7,11 +7,15 @@ namespace Learning\CheckoutMessage\Test\Unit\Plugin\Magento\Checkout;
 use Learning\CheckoutMessage\Plugin\Magento\Checkout\PaymentInformationManagementPlugin;
 use Magento\Checkout\Model\PaymentInformationManagement;
 use Magento\Sales\Api\OrderRepositoryInterface;
-use Magento\Sales\Model\ResourceModel\Order;
+use Magento\Sales\Model\Order;
+use Magento\Sales\Model\ResourceModel\Order as ResourceOrder;
+use Magento\Sales\Api\Data\OrderInterface;
 use Magento\Quote\Api\Data\PaymentInterface;
 use Magento\Quote\Api\Data\PaymentExtensionInterface;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
+
+
 
 /**
  * @covers PaymentInformationManagementPlugin
@@ -31,7 +35,17 @@ class PaymentInformationManagementPluginTest extends TestCase
     /**
      * @var Order|MockObject
      */
-    private Order $orderResource;
+    private Order $order;
+
+    /**
+     * @var ResourceOrder|MockObject
+     */
+    private ResourceOrder $orderResource;
+
+    /**
+     * @var OrderInterface|MockObject
+     */
+    private OrderInterface $orderInterface;
 
     /**
      * @var PaymentInformationManagement|MockObject
@@ -57,7 +71,15 @@ class PaymentInformationManagementPluginTest extends TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->orderResource = $this->getMockBuilder(Order::class)
+        $this->order = $this->getMockBuilder(Order::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->orderResource = $this->getMockBuilder(ResourceOrder::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->orderInterface = $this->getMockBuilder(OrderInterface::class)
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -73,20 +95,42 @@ class PaymentInformationManagementPluginTest extends TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
+
+
         $this->object = new PaymentInformationManagementPlugin(
             $this->orderRepository,
             $this->orderResource
         );
     }
 
+    public function testAfterSavePaymentInformationAndPlaceOrder(): void
+    {
+        $this->order->expects($this->once())
+            ->method('addCommentToStatusHistory')
+            ->willReturn($this->orderInterface);
+
+        $this->order->expects($this->once())
+            ->method('setCustomerNote')
+            ->willReturn($this->orderInterface);
+
+        $this->object->afterSavePaymentInformationAndPlaceOrder(
+            $this->subject,
+            '51',
+            58,
+            $this->paymentMethod
+        );
+
+
+    }
+
     /**
      * @dataProvider getCommentProvider
      *
-     * @param string $actual
-     * @param string $expected
+     * @param string|null $actual
+     * @param string|null $expected
      * @return void
      */
-    public function testGetComment(string $actual, string $expected): void
+    public function testGetComment(?string $actual, ?string $expected): void
     {
         $this->extensionAttributes->expects($this->any())
             ->method('getComment')
@@ -103,7 +147,8 @@ class PaymentInformationManagementPluginTest extends TestCase
         return [
             ['', ''],
             ['Comment', 'Comment'],
-            ['   Comment ', 'Comment']
+            ['   Comment ', 'Comment'],
+            [null, '']
         ];
     }
 }
