@@ -103,8 +103,16 @@ class PaymentInformationManagementPluginTest extends TestCase
         );
     }
 
+    /**
+     * @return void
+     */
     public function testAfterSavePaymentInformationAndPlaceOrder(): void
     {
+        $this->orderRepository->expects($this->any())
+            ->method('get')
+            ->with('51')
+            ->willReturn($this->order);
+
         $this->order->expects($this->once())
             ->method('addCommentToStatusHistory')
             ->willReturn($this->orderInterface);
@@ -119,8 +127,6 @@ class PaymentInformationManagementPluginTest extends TestCase
             58,
             $this->paymentMethod
         );
-
-
     }
 
     /**
