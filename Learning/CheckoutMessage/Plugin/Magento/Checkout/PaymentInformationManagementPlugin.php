@@ -10,6 +10,7 @@ use Magento\Sales\Model\ResourceModel\Order;
 use Magento\Quote\Api\Data\AddressInterface;
 use Magento\Quote\Api\Data\PaymentInterface;
 use Magento\Quote\Api\Data\PaymentExtensionInterface;
+use Magento\Framework\Message\ManagerInterface;
 
 class PaymentInformationManagementPlugin
 {
@@ -24,15 +25,23 @@ class PaymentInformationManagementPlugin
     protected Order $orderResource;
 
     /**
+     * @var ManagerInterface
+     */
+    protected ManagerInterface $messageManager;
+
+    /**
      * @param OrderRepositoryInterface $orderRepository
      * @param Order $orderResource
+     * @param ManagerInterface $messageManager
      */
     public function __construct(
         OrderRepositoryInterface $orderRepository,
-        Order $orderResource
+        Order $orderResource,
+        ManagerInterface $messageManager
     ) {
         $this->orderRepository = $orderRepository;
         $this->orderResource = $orderResource;
+        $this->messageManager = $messageManager;
     }
 
     /**
@@ -42,7 +51,6 @@ class PaymentInformationManagementPlugin
      * @param PaymentInterface $paymentMethod
      * @param AddressInterface|null $billingAddress
      * @return string
-     * @throws \Exception
      */
     public function afterSavePaymentInformationAndPlaceOrder(
         PaymentInformationManagement $subject,
@@ -54,11 +62,16 @@ class PaymentInformationManagementPlugin
     {
         if($result){
             $order = $this->orderRepository->get($result);
-            $orderComment = $this->getComment(null);
+            $orderComment = $this->getComment($paymentMethod->getExtensionAttributes());
 
             $order->addCommentToStatusHistory($orderComment);
             $order->setCustomerNote($orderComment);
-            $this->orderResource->save($order);
+
+            try {
+                $this->orderResource->save($order);
+            } catch (\Exception $e) {
+                $this->messageManager->addErrorMessage($e);
+            }
         }
 
         return $result;

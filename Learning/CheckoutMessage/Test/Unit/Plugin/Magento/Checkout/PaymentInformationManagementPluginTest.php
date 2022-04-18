@@ -13,9 +13,8 @@ use Magento\Sales\Api\Data\OrderInterface;
 use Magento\Quote\Api\Data\PaymentInterface;
 use Magento\Quote\Api\Data\PaymentExtensionInterface;
 use PHPUnit\Framework\MockObject\MockObject;
+use Magento\Framework\Message\ManagerInterface;
 use PHPUnit\Framework\TestCase;
-
-
 
 /**
  * @covers PaymentInformationManagementPlugin
@@ -36,6 +35,11 @@ class PaymentInformationManagementPluginTest extends TestCase
      * @var Order|MockObject
      */
     private Order $order;
+
+    /**
+     * @var ManagerInterface
+     */
+    private ManagerInterface $messageManager;
 
     /**
      * @var ResourceOrder|MockObject
@@ -75,6 +79,10 @@ class PaymentInformationManagementPluginTest extends TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
+        $this->messageManager = $this->getMockBuilder(ManagerInterface::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
         $this->orderResource = $this->getMockBuilder(ResourceOrder::class)
             ->disableOriginalConstructor()
             ->getMock();
@@ -95,11 +103,10 @@ class PaymentInformationManagementPluginTest extends TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-
-
         $this->object = new PaymentInformationManagementPlugin(
             $this->orderRepository,
-            $this->orderResource
+            $this->orderResource,
+            $this->messageManager
         );
     }
 
@@ -120,6 +127,38 @@ class PaymentInformationManagementPluginTest extends TestCase
         $this->order->expects($this->once())
             ->method('setCustomerNote')
             ->willReturn($this->orderInterface);
+
+        $this->object->afterSavePaymentInformationAndPlaceOrder(
+            $this->subject,
+            '51',
+            58,
+            $this->paymentMethod
+        );
+    }
+
+    /**
+     * @return void
+     * @exception \Exception
+     */
+    public function testAfterSavePaymentInformationAndPlaceOrderWithException()
+    {
+        $this->orderRepository->expects($this->any())
+            ->method('get')
+            ->with('51')
+            ->willReturn($this->order);
+
+        $this->order->expects($this->once())
+            ->method('addCommentToStatusHistory')
+            ->willReturn($this->orderInterface);
+
+        $this->order->expects($this->once())
+            ->method('setCustomerNote')
+            ->willReturn($this->orderInterface);
+
+        $this->orderResource->expects($this->once())
+            ->method('save')
+            ->with($this->order)
+            ->willThrowException(new \Exception('Exception'));
 
         $this->object->afterSavePaymentInformationAndPlaceOrder(
             $this->subject,
