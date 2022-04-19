@@ -98,7 +98,10 @@ class LayoutProcessorTest extends TestCase
         );
     }
 
-    public function testAfterProcess()
+    /**
+     * @return void
+     */
+    public function testAfterProcess(): void
     {
         $this->assertIsArray(
             $this->object->afterProcess(

@@ -140,7 +140,7 @@ class PaymentInformationManagementPluginTest extends TestCase
      * @return void
      * @exception \Exception
      */
-    public function testAfterSavePaymentInformationAndPlaceOrderWithException()
+    public function testAfterSavePaymentInformationAndPlaceOrderWithException(): void
     {
         $this->orderRepository->expects($this->any())
             ->method('get')
