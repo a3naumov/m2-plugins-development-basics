@@ -5,16 +5,15 @@ declare(strict_types=1);
 namespace Learning\CheckoutMessage\Test\Unit\Plugin\Magento\Checkout;
 
 use Learning\CheckoutMessage\Plugin\Magento\Checkout\LayoutProcessor;
-use PHPUnit\Framework\TestCase;
-
-use PHPUnit\Framework\MockObject\MockObject;
-use Magento\Framework\View\Element\Template\Context;
-use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\CheckoutAgreements\Model\ResourceModel\Agreement\CollectionFactory;
+use Magento\Checkout\Block\Checkout\LayoutProcessor as CheckoutLayoutProcessor;
 use Magento\Checkout\Model\Session;
 use Magento\Customer\Model\AddressFactory;
+use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\Data\Form\FormKey;
-use Magento\Checkout\Block\Checkout\LayoutProcessor as CheckoutLayoutProcessor;
+use Magento\Framework\View\Element\Template\Context;
+use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers LayoutProcessor
