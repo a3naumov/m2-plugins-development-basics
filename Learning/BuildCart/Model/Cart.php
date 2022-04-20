@@ -8,15 +8,16 @@ use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\File\Csv;
 use Magento\Catalog\Model\ProductRepository;
-use Magento\Checkout\Model\Cart as CartModel;
-use Magento\Framework\Message\ManagerInterface;
+use Magento\Quote\Model\Quote;
+use Magento\Quote\Model\QuoteRepository;
+use Magento\Catalog\Model\Product;
 
 class Cart
 {
     /**
-     * @var \Magento\Checkout\Model\Cart
+     * @var QuoteRepository
      */
-    private CartModel $cart;
+    private QuoteRepository $quoteRepository;
 
     /**
      * @var ProductRepository
@@ -29,58 +30,55 @@ class Cart
     private Csv $csvReader;
 
     /**
-     * @var ManagerInterface
-     */
-    private ManagerInterface $messageManager;
-
-    /**
-     * @param \Magento\Checkout\Model\Cart $cart
+     * @param QuoteRepository $quoteRepository
      * @param ProductRepository $productRepository
      * @param Csv $csvReader
      */
     public function __construct(
-        CartModel $cart,
+        QuoteRepository $quoteRepository,
         ProductRepository $productRepository,
-        Csv $csvReader,
-        ManagerInterface $messageManager
+        Csv $csvReader
     ) {
-        $this->cart = $cart;
+        $this->quoteRepository = $quoteRepository;
         $this->productRepository = $productRepository;
         $this->csvReader = $csvReader;
-        $this->messageManager = $messageManager;
     }
 
     /**
      * @param array $file
      * @return array
+     * @throws \Exception
      */
     public function readDataFromFile(array $file): array
     {
-        try {
-            return $this->csvReader->getData($file['tmp_name']);
-        } catch (\Exception $e) {
-            $this->messageManager->addErrorMessage($e);
-            return array();
+        return $this->csvReader->getData($file['tmp_name']);
+    }
+
+    /**
+     * @param Quote $quote
+     * @param array $data
+     * @return void
+     * @throws LocalizedException
+     * @throws NoSuchEntityException
+     */
+    public function putProduct(Quote $quote, array $data): void
+    {
+        if ($data) {
+            foreach ($data as $item) {
+                $product = $this->getItem($item[0]);
+                $quote->addProduct($product)->addQty((int) $item[1]);
+            }
+            $this->quoteRepository->save($quote);
         }
     }
 
     /**
-     * @param array $data
-     * @return void
+     * @param string $productId
+     * @return Product
+     * @throws NoSuchEntityException
      */
-    public function putProduct(array $data): void
+    public function getItem(string $productId): Product
     {
-        if ($data) {
-            foreach ($data as $item) {
-                try {
-                    $product = $this->productRepository->get($item[0]);
-                    $this->cart->addProduct($product, ['qty' => (int) $item[1]]);
-                } catch (NoSuchEntityException|LocalizedException $e) {
-                    $this->messageManager->addErrorMessage($e);
-                }
-            }
-        }
-
-        $this->cart->save();
+        return $this->productRepository->get($productId);
     }
 }
