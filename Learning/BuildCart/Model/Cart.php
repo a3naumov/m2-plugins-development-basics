@@ -4,13 +4,12 @@ declare(strict_types=1);
 
 namespace Learning\BuildCart\Model;
 
+use Magento\Catalog\Model\ProductRepository;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\File\Csv;
-use Magento\Catalog\Model\ProductRepository;
 use Magento\Quote\Model\Quote;
 use Magento\Quote\Model\QuoteRepository;
-use Magento\Catalog\Model\Product;
 
 class Cart
 {
@@ -58,6 +57,7 @@ class Cart
      * @param Quote $quote
      * @param array $data
      * @return void
+     * @throws NoSuchEntityException
      * @throws LocalizedException
      * @throws NoSuchEntityException
      */
@@ -65,20 +65,10 @@ class Cart
     {
         if ($data) {
             foreach ($data as $item) {
-                $product = $this->getItem($item[0]);
-                $quote->addProduct($product)->addQty((int) $item[1]);
+                $product = $this->productRepository->get($item[0]);
+                $quote->addProduct($product)->setQty((float) $item[1]);
             }
             $this->quoteRepository->save($quote);
         }
-    }
-
-    /**
-     * @param string $productId
-     * @return Product
-     * @throws NoSuchEntityException
-     */
-    public function getItem(string $productId): Product
-    {
-        return $this->productRepository->get($productId);
     }
 }

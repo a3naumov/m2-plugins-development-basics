@@ -5,16 +5,18 @@ declare(strict_types=1);
 namespace Learning\BuildCart\Controller\Index;
 
 use Learning\BuildCart\Model\Cart;
-use Magento\Framework\App\Action\Action;
-use Magento\Framework\App\Action\Context;
+use Magento\Checkout\Model\Session;
+use Magento\Framework\App\ActionInterface;
+use Magento\Framework\App\RequestInterface;
+use Magento\Framework\App\Response\RedirectInterface;
 use Magento\Framework\Controller\ResultFactory;
 use Magento\Framework\Controller\Result\Redirect;
 use Magento\Framework\Exception\LocalizedException;
-use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\Exception\NotFoundException;
-use Magento\Checkout\Model\Session;
+use Magento\Framework\Exception\NoSuchEntityException;
+use Magento\Framework\Message\ManagerInterface as MessageManagerInterface;
 
-class Upload extends Action
+class Upload implements ActionInterface
 {
     /**
      * @var Session
@@ -22,23 +24,52 @@ class Upload extends Action
     private Session $session;
 
     /**
+     * @var RequestInterface
+     */
+    private RequestInterface $request;
+
+    /**
+     * @var MessageManagerInterface
+     */
+    private MessageManagerInterface $messageManager;
+
+    /**
+     * @var ResultFactory
+     */
+    private ResultFactory $resultFactory;
+
+    /**
+     * @var RedirectInterface
+     */
+    private RedirectInterface $redirect;
+
+    /**
      * @var Cart
      */
     private Cart $cart;
 
     /**
+     * @param RequestInterface $request
      * @param Session $session
-     * @param Context $context
+     * @param MessageManagerInterface $messageManager
+     * @param ResultFactory $resultFactory
+     * @param RedirectInterface $redirect
      * @param Cart $cart
      */
     public function __construct(
+        RequestInterface $request,
         Session $session,
-        Context $context,
+        MessageManagerInterface $messageManager,
+        ResultFactory $resultFactory,
+        RedirectInterface $redirect,
         Cart $cart
     ) {
+        $this->request = $request;
         $this->session = $session;
+        $this->messageManager = $messageManager;
+        $this->resultFactory = $resultFactory;
+        $this->redirect = $redirect;
         $this->cart = $cart;
-        return parent::__construct($context);
     }
 
     /**
@@ -47,7 +78,7 @@ class Upload extends Action
      */
     public function execute(): Redirect
     {
-        if (!$this->getRequest()->isPost()) {
+        if (!$this->request->isPost()) {
             throw new NotFoundException(__('Page not found'));
         }
 
@@ -58,12 +89,11 @@ class Upload extends Action
                 $this->cart->putProduct($quote, $data);
             }
         } catch (\Exception | NoSuchEntityException | LocalizedException $e) {
-            $this->messageManager->addErrorMessage($e->getMessage());
-            return $this->resultFactory->create(ResultFactory::TYPE_REDIRECT)->setUrl($this->_redirect->getRefererUrl());
+            $this->messageManager->addErrorMessage(__($e->getMessage()));
+            return $this->resultFactory->create(ResultFactory::TYPE_REDIRECT)->setUrl($this->redirect->getRefererUrl());
         }
 
-
-        $this->messageManager->addSuccessMessage('Success!');
+        $this->messageManager->addSuccessMessage(__('Success!'));
         return $this->resultFactory->create(ResultFactory::TYPE_REDIRECT)->setPath('checkout/cart');
     }
 }
