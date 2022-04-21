@@ -7,26 +7,26 @@ namespace Learning\BuildCart\Controller\Index;
 use Learning\BuildCart\Model\Cart;
 use Magento\Checkout\Model\Session;
 use Magento\Framework\App\ActionInterface;
-use Magento\Framework\App\RequestInterface;
+use Magento\Framework\App\Request\Http;
 use Magento\Framework\App\Response\RedirectInterface;
-use Magento\Framework\Controller\ResultFactory;
 use Magento\Framework\Controller\Result\Redirect;
+use Magento\Framework\Controller\ResultFactory;
 use Magento\Framework\Exception\LocalizedException;
-use Magento\Framework\Exception\NotFoundException;
 use Magento\Framework\Exception\NoSuchEntityException;
+use Magento\Framework\Exception\NotFoundException;
 use Magento\Framework\Message\ManagerInterface as MessageManagerInterface;
 
 class Upload implements ActionInterface
 {
     /**
+     * @var Http
+     */
+    private Http $request;
+
+    /**
      * @var Session
      */
     private Session $session;
-
-    /**
-     * @var RequestInterface
-     */
-    private RequestInterface $request;
 
     /**
      * @var MessageManagerInterface
@@ -49,7 +49,7 @@ class Upload implements ActionInterface
     private Cart $cart;
 
     /**
-     * @param RequestInterface $request
+     * @param Http $request
      * @param Session $session
      * @param MessageManagerInterface $messageManager
      * @param ResultFactory $resultFactory
@@ -57,7 +57,7 @@ class Upload implements ActionInterface
      * @param Cart $cart
      */
     public function __construct(
-        RequestInterface $request,
+        HTTP $request,
         Session $session,
         MessageManagerInterface $messageManager,
         ResultFactory $resultFactory,
